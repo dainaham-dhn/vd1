@@ -7,8 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml.Linq;
-
-namespace _10_11_26
+namespace ThucHanh10_11
 {
     [Autodesk.Revit.Attributes.Transaction(Autodesk.Revit.Attributes.TransactionMode.Manual)]
 
@@ -17,19 +16,18 @@ namespace _10_11_26
         public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
             UIDocument uidoc = commandData.Application.ActiveUIDocument;
-            ICollection<ElementId> selectElement = uidoc.Selection.GetElementIds();
-            int totalCount = selectElement.Count;
-            MessageBox.Show("Ban da chon: " + totalCount.ToString() + "elements");
+            XYZ point1 = uidoc.Selection.PickPoint();
+            XYZ point2 = uidoc.Selection.PickPoint();
+            XYZ point3 = uidoc.Selection.PickPoint();
 
-            //phat trien code
-            string IdList = "Danh sach ID cua doi tuong:\n";
-            foreach (ElementId e1 in selectElement)
-            {
-                IdList = IdList + e1.ToString() + "\n";
+            StringBuilder sb = new StringBuilder();
+            sb.AppendLine(point1.ToString());
+            sb.AppendLine(point2.ToString());
+            sb.AppendLine(point3.ToString());
 
-            }
-            MessageBox.Show(IdList);
+            MessageBox.Show("ban da lua chon cac diem point:\n" + sb.ToString());
             return Result.Succeeded;
+
         }
 
     }
